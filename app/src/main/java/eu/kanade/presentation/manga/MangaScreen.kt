@@ -141,6 +141,7 @@ import kotlin.math.roundToInt
 @Composable
 fun MangaScreen(
     state: MangaScreenModel.State.Success,
+    mangaIncognitoState: Boolean?,
     snackbarHostState: SnackbarHostState,
     nextUpdate: Instant?,
     isTabletUi: Boolean,
@@ -157,6 +158,7 @@ fun MangaScreen(
     // For tags menu
     onTagSearch: (String) -> Unit,
 
+    onMangaIncognitoToggled: () -> Unit,
     onFilterButtonClicked: () -> Unit,
     onRefresh: () -> Unit,
     onContinueReading: () -> Unit,
@@ -220,6 +222,7 @@ fun MangaScreen(
     if (!isTabletUi) {
         MangaScreenSmallImpl(
             state = state,
+            mangaIncognitoState = mangaIncognitoState,
             snackbarHostState = snackbarHostState,
             nextUpdate = nextUpdate,
             chapterSwipeStartAction = chapterSwipeStartAction,
@@ -233,6 +236,7 @@ fun MangaScreen(
             onTrackingClicked = onTrackingClicked,
             onTagSearch = onTagSearch,
             onCopyTagToClipboard = onCopyTagToClipboard,
+            onMangaIncognitoToggled = onMangaIncognitoToggled,
             onFilterClicked = onFilterButtonClicked,
             onRefresh = onRefresh,
             onContinueReading = onContinueReading,
@@ -278,6 +282,7 @@ fun MangaScreen(
     } else {
         MangaScreenLargeImpl(
             state = state,
+            mangaIncognitoState = mangaIncognitoState,
             snackbarHostState = snackbarHostState,
             chapterSwipeStartAction = chapterSwipeStartAction,
             chapterSwipeEndAction = chapterSwipeEndAction,
@@ -291,6 +296,7 @@ fun MangaScreen(
             onTrackingClicked = onTrackingClicked,
             onTagSearch = onTagSearch,
             onCopyTagToClipboard = onCopyTagToClipboard,
+            onMangaIncognitoToggled = onMangaIncognitoToggled,
             onFilterButtonClicked = onFilterButtonClicked,
             onRefresh = onRefresh,
             onContinueReading = onContinueReading,
@@ -339,6 +345,7 @@ fun MangaScreen(
 @Composable
 private fun MangaScreenSmallImpl(
     state: MangaScreenModel.State.Success,
+    mangaIncognitoState: Boolean?,
     snackbarHostState: SnackbarHostState,
     nextUpdate: Instant?,
     chapterSwipeStartAction: LibraryPreferences.ChapterSwipeAction,
@@ -355,6 +362,7 @@ private fun MangaScreenSmallImpl(
     onTagSearch: (String) -> Unit,
     onCopyTagToClipboard: (tag: String) -> Unit,
 
+    onMangaIncognitoToggled: () -> Unit,
     onFilterClicked: () -> Unit,
     onRefresh: () -> Unit,
     onContinueReading: () -> Unit,
@@ -467,10 +475,12 @@ private fun MangaScreenSmallImpl(
             )
             MangaToolbar(
                 title = state.manga.title,
+                incognitoMode = mangaIncognitoState,
                 titleAlphaProvider = { animatedTitleAlpha },
                 backgroundAlphaProvider = { animatedBgAlpha },
                 hasFilters = state.filterActive,
                 onBackClicked = internalOnBackPressed,
+                onToggleMangaIncognito = onMangaIncognitoToggled,
                 onClickFilter = onFilterClicked,
                 onClickShare = onShareClicked,
                 onClickDownload = onDownloadActionClicked,
@@ -797,6 +807,7 @@ private fun MangaScreenSmallImpl(
 @Composable
 private fun MangaScreenLargeImpl(
     state: MangaScreenModel.State.Success,
+    mangaIncognitoState: Boolean?,
     snackbarHostState: SnackbarHostState,
     nextUpdate: Instant?,
     chapterSwipeStartAction: LibraryPreferences.ChapterSwipeAction,
@@ -813,6 +824,7 @@ private fun MangaScreenLargeImpl(
     onTagSearch: (String) -> Unit,
     onCopyTagToClipboard: (tag: String) -> Unit,
 
+    onMangaIncognitoToggled: () -> Unit,
     onFilterButtonClicked: () -> Unit,
     onRefresh: () -> Unit,
     onContinueReading: () -> Unit,
@@ -916,10 +928,12 @@ private fun MangaScreenLargeImpl(
             MangaToolbar(
                 modifier = Modifier.onSizeChanged { topBarHeight = it.height },
                 title = state.manga.title,
+                incognitoMode = mangaIncognitoState,
                 titleAlphaProvider = { if (isAnySelected) 1f else 0f },
                 backgroundAlphaProvider = { 1f },
                 hasFilters = state.filterActive,
                 onBackClicked = internalOnBackPressed,
+                onToggleMangaIncognito = onMangaIncognitoToggled,
                 onClickFilter = onFilterButtonClicked,
                 onClickShare = onShareClicked,
                 onClickDownload = onDownloadActionClicked,

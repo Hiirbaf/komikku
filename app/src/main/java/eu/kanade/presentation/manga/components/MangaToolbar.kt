@@ -1,5 +1,8 @@
 package eu.kanade.presentation.manga.components
 
+import androidx.compose.animation.graphics.res.animatedVectorResource
+import androidx.compose.animation.graphics.res.rememberAnimatedVectorPainter
+import androidx.compose.animation.graphics.vector.AnimatedImageVector
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.material.icons.Icons
@@ -35,6 +38,7 @@ import eu.kanade.tachiyomi.ui.browse.source.browse.BrowseSourceScreen
 import eu.kanade.tachiyomi.ui.browse.source.feed.SourceFeedScreen
 import eu.kanade.tachiyomi.ui.manga.MangaScreen
 import eu.kanade.tachiyomi.util.system.isDevFlavor
+import eu.kanade.tachiyomi.R
 import kotlinx.collections.immutable.persistentListOf
 import tachiyomi.i18n.MR
 import tachiyomi.i18n.kmk.KMR
@@ -47,9 +51,11 @@ import uy.kohesive.injekt.api.get
 @Composable
 fun MangaToolbar(
     title: String,
+    incognitoMode: Boolean?,
     titleAlphaProvider: () -> Float,
     hasFilters: Boolean,
     onBackClicked: () -> Unit,
+    onToggleMangaIncognito: (() -> Unit)?,
     onClickFilter: () -> Unit,
     onClickShare: (() -> Unit)?,
     onClickDownload: ((DownloadAction) -> Unit)?,
@@ -147,6 +153,20 @@ fun MangaToolbar(
                     AppBarActions(
                         actions = persistentListOf<AppBar.AppBarAction>().builder()
                             .apply {
+                                if (onToggleMangaIncognito != null) {
+                                    add(
+                                        AppBar.Action(
+                                            title = stringResource(MR.strings.pref_incognito_mode),
+                                            icon = null,
+                                            iconPainter = rememberAnimatedVectorPainter(
+                                                AnimatedImageVector.animatedVectorResource(R.drawable.anim_incognito),
+                                                incognitoMode==true,
+                                            ),
+                                            iconTint = if (incognitoMode==true) MaterialTheme.colorScheme.primary else null,
+                                            onClick = onToggleMangaIncognito,
+                                        ),
+                                    )
+                                }
                                 if (onClickDownload != null) {
                                     add(
                                         AppBar.Action(
@@ -183,6 +203,14 @@ fun MangaToolbar(
                                         AppBar.OverflowAction(
                                             title = stringResource(MR.strings.action_migrate),
                                             onClick = onClickMigrate,
+                                        ),
+                                    )
+                                }
+                                if (onClickShare != null) {
+                                    add(
+                                        AppBar.OverflowAction(
+                                            title = stringResource(MR.strings.action_share),
+                                            onClick = onClickShare,
                                         ),
                                     )
                                 }
