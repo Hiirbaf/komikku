@@ -7,7 +7,6 @@
 package eu.kanade.tachiyomi.data.connections.discord
 
 import androidx.annotation.StringRes
-import eu.kanade.tachiyomi.BuildConfig
 import eu.kanade.tachiyomi.R
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
