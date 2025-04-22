@@ -219,7 +219,7 @@ class DiscordRPCService : Service() {
                 }
             }
 
-            withIOContext {
+          /*  withIOContext {
                 val connectionsManager: ConnectionsManager by injectLazy()
                 val networkService: NetworkHelper by injectLazy()
                 val client = networkService.client
@@ -262,7 +262,7 @@ class DiscordRPCService : Service() {
                         endTimestamp = end,
                     ),
                 )
-            }
+            } */
         }
 
         @Suppress("SwallowedException", "TooGenericExceptionCaught", "CyclomaticComplexMethod")
