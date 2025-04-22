@@ -6,8 +6,15 @@
       pull_request:
         branches: [RPC]  # O cualquier rama principal
           # Dispatch or Manual triggers
-        workflow_dispatch:
+      workflow_dispatch:
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+  
     jobs:
       spotless:
         runs-on: ubuntu-latest
