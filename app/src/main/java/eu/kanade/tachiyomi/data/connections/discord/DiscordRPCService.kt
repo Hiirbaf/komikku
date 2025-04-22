@@ -14,7 +14,7 @@ import android.os.Looper
 import androidx.compose.ui.util.fastAny
 import eu.kanade.domain.connections.service.ConnectionsPreferences
 import eu.kanade.tachiyomi.R
-import eu.kanade.tachiyomi.data.connections.ConnectionManager
+import eu.kanade.tachiyomi.data.connections.ConnectionsManager
 import eu.kanade.tachiyomi.data.notification.NotificationReceiver
 import eu.kanade.tachiyomi.data.notification.Notifications
 import eu.kanade.tachiyomi.network.NetworkHelper
@@ -34,12 +34,12 @@ import kotlin.math.floor
 
 class DiscordRPCService : Service() {
 
-    private val connectionManager: ConnectionManager by injectLazy()
+    private val connectionsManager: ConnectionsManager by injectLazy()
 
     @OptIn(DelicateCoroutinesApi::class)
     override fun onCreate() {
         super.onCreate()
-        val token = connectionsPreferences.connectionsToken(connectionManager.discord).get()
+        val token = connectionsPreferences.connectionsToken(connectionsManager.discord).get()
         val status = when (connectionsPreferences.discordRPCStatus().get()) {
             -1 -> "dnd"
             0 -> "idle"
@@ -311,14 +311,14 @@ class DiscordRPCService : Service() {
             }
 
             withIOContext {
-                val connectionManager: ConnectionManager by injectLazy()
+                val connectionsManager: ConnectionsManager by injectLazy()
                 val networkService: NetworkHelper by injectLazy()
                 val client = networkService.client
                 val json = Json { ignoreUnknownKeys = true } // Configura el JSON parser si es necesario
                 val rpcExternalAsset =
                     RPCExternalAsset(
                         applicationId = RICH_PRESENCE_APPLICATION_ID,
-                        token = connectionPreferences.connectionsToken(connectionManager.discord).get(),
+                        token = connectionPreferences.connectionsToken(connectionsManager.discord).get(),
                         client = client,
                         json = json,
                     )
