@@ -18,7 +18,6 @@ import eu.kanade.tachiyomi.data.connections.ConnectionsManager
 import eu.kanade.tachiyomi.data.notification.NotificationReceiver
 import eu.kanade.tachiyomi.data.notification.Notifications
 import eu.kanade.tachiyomi.network.NetworkHelper
-import eu.kanade.tachiyomi.ui.player.settings.PlayerPreferences
 import eu.kanade.tachiyomi.util.system.notificationBuilder
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.serialization.json.Json
@@ -48,11 +47,7 @@ class DiscordRPCService : Service() {
         rpc = if (token.isNotBlank()) DiscordRPC(token, status) else null
         if (rpc != null) {
             launchIO {
-                if (lastUsedScreen == DiscordScreen.VIDEO) {
-                    setAnimeScreen(this@DiscordRPCService, lastUsedScreen)
-                } else if (lastUsedScreen == DiscordScreen.MANGA) {
-                    setMangaScreen(this@DiscordRPCService, lastUsedScreen)
-                }
+                setMangaScreen(this@DiscordRPCService, lastUsedScreen)
             }
             notification(this)
         } else {
