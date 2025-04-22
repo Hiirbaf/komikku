@@ -106,11 +106,7 @@ class DiscordRPCService : Service() {
 
         internal var lastUsedScreen = DiscordScreen.APP
             set(value) {
-                field = if (
-                        value == DiscordScreen.MANGA
-                        ) ||
-                    value == DiscordScreen.WEBVIEW
-                ) {
+                field = if (value == DiscordScreen.MANGA || value == DiscordScreen.WEBVIEW) {
                     field
                 } else {
                     value
