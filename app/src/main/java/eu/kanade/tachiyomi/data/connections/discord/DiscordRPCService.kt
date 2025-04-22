@@ -86,7 +86,6 @@ class DiscordRPCService : Service() {
         internal var rpc: DiscordRPC? = null
 
         private val handler = Handler(Looper.getMainLooper())
-        private val playerPreferences: PlayerPreferences by injectLazy()
 
         fun start(context: Context) {
             handler.removeCallbacksAndMessages(null)
@@ -107,9 +106,8 @@ class DiscordRPCService : Service() {
 
         internal var lastUsedScreen = DiscordScreen.APP
             set(value) {
-                field = if ((
-                        value == DiscordScreen.VIDEO ||
-                            value == DiscordScreen.MANGA
+                field = if (
+                        value == DiscordScreen.MANGA
                         ) ||
                     value == DiscordScreen.WEBVIEW
                 ) {
@@ -119,7 +117,7 @@ class DiscordRPCService : Service() {
                 }
             }
 
-        internal suspend fun setAnimeScreen(
+       /* internal suspend fun setAnimeScreen(
             context: Context,
             discordScreen: DiscordScreen,
             playerData: PlayerData = PlayerData(),
@@ -155,7 +153,7 @@ class DiscordRPCService : Service() {
                     ),
                 ),
             )
-        }
+        } */
 
         internal suspend fun setMangaScreen(
             context: Context,
