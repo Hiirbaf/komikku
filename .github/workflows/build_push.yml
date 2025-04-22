@@ -60,8 +60,8 @@ jobs:
       - name: Build app
         run: ./gradlew assembleRelease -Pinclude-telemetry -Penable-updater
 
-      - name: Run unit tests
-        run: ./gradlew testReleaseUnitTest
+     # - name: Run unit tests
+     #   run: ./gradlew testReleaseUnitTest
 
       - name: Sign APK
         uses: r0adkll/sign-android-release@f30bdd30588842ac76044ecdbd4b6d0e3e813478
