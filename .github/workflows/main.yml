@@ -1,0 +1,33 @@
+name: Prueba
+
+on:
+  workflow_dispatch:
+    inputs:
+      branch:
+        description: 'Rama a revisar'
+        required: true
+        default: 'main'
+      runSpotless:
+        description: '¿Ejecutar Spotless?'
+        required: true
+        default: 'true'
+
+jobs:
+  check-format:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout código
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ github.event.inputs.branch }}
+
+      - name: Set up JDK
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      - name: Run Spotless Check
+        if: ${{ github.event.inputs.runSpotless == 'true' }}
+        run: ./gradlew spotlessApply
