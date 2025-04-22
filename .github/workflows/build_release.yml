@@ -1,6 +1,9 @@
 name: Release Builder
 # Build a stable release on a tag v* newly pushed
-
+on:
+  # Dispatch or Manual triggers
+  workflow_dispatch:
+  
 on:
   push:
     tags:
