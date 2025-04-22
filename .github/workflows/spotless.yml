@@ -5,6 +5,8 @@
         branches: [RPC]  # O cualquier rama principal
       pull_request:
         branches: [RPC]  # O cualquier rama principal
+          # Dispatch or Manual triggers
+  workflow_dispatch:
 
     jobs:
       spotless:
