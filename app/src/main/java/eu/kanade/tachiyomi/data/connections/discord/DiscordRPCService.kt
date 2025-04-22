@@ -39,8 +39,8 @@ class DiscordRPCService : Service() {
     @OptIn(DelicateCoroutinesApi::class)
     override fun onCreate() {
         super.onCreate()
-        val token = connectionPreferences.connectionsToken(connectionManager.discord).get()
-        val status = when (connectionPreferences.discordRPCStatus().get()) {
+        val token = connectionsPreferences.connectionsToken(connectionManager.discord).get()
+        val status = when (connectionsPreferences.discordRPCStatus().get()) {
             -1 -> "dnd"
             0 -> "idle"
             else -> "online"
@@ -56,7 +56,7 @@ class DiscordRPCService : Service() {
             }
             notification(this)
         } else {
-            connectionPreferences.enableDiscordRPC().set(false)
+            connectionsPreferences.enableDiscordRPC().set(false)
         }
     }
 
@@ -86,7 +86,7 @@ class DiscordRPCService : Service() {
 
     companion object {
 
-        private val connectionPreferences: ConnectionPreferences by injectLazy()
+        private val connectionsPreferences: ConnectionsPreferences by injectLazy()
 
         internal var rpc: DiscordRPC? = null
 
@@ -95,7 +95,7 @@ class DiscordRPCService : Service() {
 
         fun start(context: Context) {
             handler.removeCallbacksAndMessages(null)
-            if (rpc == null && connectionPreferences.enableDiscordRPC().get()) {
+            if (rpc == null && connectionsPreferences.enableDiscordRPC().get()) {
                 since = System.currentTimeMillis()
                 context.startService(Intent(context, DiscordRPCService::class.java))
             }
@@ -210,8 +210,8 @@ class DiscordRPCService : Service() {
                 .map { it.id.toString() }
                 .run { ifEmpty { plus(UNCATEGORIZED_ID.toString()) } }
 
-            val discordIncognitoMode = connectionPreferences.discordRPCIncognito().get()
-            val incognitoCategories = connectionPreferences.discordRPCIncognitoCategories().get()
+            val discordIncognitoMode = connectionsPreferences.discordRPCIncognito().get()
+            val incognitoCategories = connectionsPreferences.discordRPCIncognitoCategories().get()
 
             val incognitoCategory = animeCategoryIds.fastAny {
                 it in incognitoCategories
@@ -224,7 +224,7 @@ class DiscordRPCService : Service() {
             val episodeNumber = playerData.episodeNumber?.let {
                 when {
                     discordIncognito -> null
-                    connectionPreferences.useChapterTitles().get() -> it
+                    connectionsPreferences.useChapterTitles().get() -> it
                     ceil(it.toDouble()) == floor(it.toDouble()) -> "Episode ${it.toInt()}"
                     else -> "Episode $it"
                 }
@@ -242,7 +242,7 @@ class DiscordRPCService : Service() {
                 val rpcExternalAsset =
                     RPCExternalAsset(
                         applicationId = RICH_PRESENCE_APPLICATION_ID,
-                        token = connectionPreferences.connectionsToken(connectionManager.discord).get(),
+                        token = connectionsPreferences.connectionsToken(connectionManager.discord).get(),
                         client = client,
                         json = json,
                     )
