@@ -29,6 +29,6 @@ jobs:
           distribution: 'temurin'
 
       - name: Run Spotless Check
-        if: {{ github.event.inputs.runSpotless == 'true' }}
+        if: ${{ github.event.inputs.runSpotless == 'true' }}
         run: ./gradlew spotlessApply
         
