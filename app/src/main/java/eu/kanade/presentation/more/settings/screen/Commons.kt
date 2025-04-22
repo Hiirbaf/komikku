@@ -45,6 +45,7 @@ fun getCategoriesLabel(
     return stringResource(MR.strings.include, includedItemsText) + "\n" +
         stringResource(MR.strings.exclude, excludedItemsText)
 }
+
 @ReadOnlyComposable
 @Composable
 fun getCategoriesLabel(
