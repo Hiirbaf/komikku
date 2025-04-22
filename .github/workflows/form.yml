@@ -20,7 +20,7 @@ jobs:
       - name: Checkout código
         uses: actions/checkout@v3
         with:
-          ref: github.event.inputs.branch 
+          ref: ${{ github.event.inputs.branch }}
 
       - name: Set up JDK
         uses: actions/setup-java@v3
@@ -31,4 +31,3 @@ jobs:
       - name: Run Spotless Check
         if: ${{ github.event.inputs.runSpotless == 'true' }}
         run: ./gradlew spotlessApply
-        
