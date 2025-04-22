@@ -231,7 +231,7 @@ class DiscordRPCService : Service() {
             }
 
             withIOContext {
-                val connectionManager: ConnectionManager by injectLazy()
+                val connectionsManager: ConnectionsManager by injectLazy()
                 val networkService: NetworkHelper by injectLazy()
                 val client = networkService.client
                 val json = Json {
@@ -242,7 +242,7 @@ class DiscordRPCService : Service() {
                 val rpcExternalAsset =
                     RPCExternalAsset(
                         applicationId = RICH_PRESENCE_APPLICATION_ID,
-                        token = connectionsPreferences.connectionsToken(connectionManager.discord).get(),
+                        token = connectionsPreferences.connectionsToken(connectionsManager.discord).get(),
                         client = client,
                         json = json,
                     )
