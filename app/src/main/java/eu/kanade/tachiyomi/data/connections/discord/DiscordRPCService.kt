@@ -281,8 +281,8 @@ class DiscordRPCService : Service() {
                 .map { it.id.toString() }
                 .run { ifEmpty { plus(UNCATEGORIZED_ID.toString()) } }
 
-            val discordIncognitoMode = connectionPreferences.discordRPCIncognito().get()
-            val incognitoCategories = connectionPreferences.discordRPCIncognitoCategories().get()
+            val discordIncognitoMode = connectionsPreferences.discordRPCIncognito().get()
+            val incognitoCategories = connectionsPreferences.discordRPCIncognitoCategories().get()
 
             val incognitoCategory = animeCategoryIds.fastAny {
                 it in incognitoCategories
@@ -295,7 +295,7 @@ class DiscordRPCService : Service() {
             val chapterNumber = readerData.chapterNumber?.let {
                 when {
                     discordIncognito -> null
-                    connectionPreferences.useChapterTitles().get() ->
+                    connectionsPreferences.useChapterTitles().get() ->
                         "$it (${readerData.chapterProgress.first}/${readerData.chapterProgress.second})"
                     ceil(it.toDouble()) == floor(it.toDouble()) -> "Chapter ${it.toInt()}" + " " +
                         "(${readerData.chapterProgress.first}/${readerData.chapterProgress.second})"
@@ -311,7 +311,7 @@ class DiscordRPCService : Service() {
                 val rpcExternalAsset =
                     RPCExternalAsset(
                         applicationId = RICH_PRESENCE_APPLICATION_ID,
-                        token = connectionPreferences.connectionsToken(connectionsManager.discord).get(),
+                        token = connectionsPreferences.connectionsToken(connectionsManager.discord).get(),
                         client = client,
                         json = json,
                     )
