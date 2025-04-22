@@ -1,37 +1,33 @@
-    name: Spotless Apply
+name: Format
 
-    on:
-      push:
-        branches: [RPC]  # O cualquier rama principal
-      pull_request:
-        branches: [RPC]  # O cualquier rama principal
-          # Dispatch or Manual triggers
-      workflow_dispatch:
+on:
+  workflow_dispatch:
+    inputs:
+      branch:
+        description: 'Rama a revisar'
+        required: true
+        default: 'main'
+      runSpotless:
+        description: '¿Ejecutar Spotless?'
+        required: true
+        default: 'true'
 
-concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
+jobs:
+  check-format:
+    runs-on: ubuntu-latest
 
-permissions:
-  contents: read
-  
-    jobs:
-      spotless:
-        runs-on: ubuntu-latest
-        steps:
-          - name: Checkout code
-            uses: actions/checkout@v3
-          - name: Set up JDK
-            uses: actions/setup-java@c5195efecf7bdfc987ee8bae7a71cb8b11521c00 # v4.7.1
-            with:
-            java-version: 17
-            distribution: temurin
-          - name: Apply Spotless formatting
-            run: ./gradlew spotlessApply
-          - name: Commit changes
-            run: |
-              git config --local user.email "noreply@github.com"
-              git config --local user.name "GitHub Actions"
-              git add .
-              git commit -m "Apply Spotless formatting"
-              git push
+    steps:
+      - name: Checkout código
+        uses: actions/checkout@v3
+        with:
+          ref: github.event.inputs.branch 
+
+      - name: Set up JDK
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      - name: Run Spotless Check
+        if:{{ github.event.inputs.runSpotless == 'true' }}
+        run: ./gradlew spotlessApply
