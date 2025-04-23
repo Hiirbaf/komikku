@@ -1,9 +1,3 @@
-// AM (DISCORD) -->
-
-// Taken from Animiru. Thank you Quickdev for permission!
-// Original library from https://github.com/dead8309/KizzyRPC (Thank you)
-// Thank you to the 最高 man for the refactored and simplified code
-// https://github.com/saikou-app/saikou
 package eu.kanade.tachiyomi.data.connections.discord
 
 import androidx.annotation.StringRes
@@ -16,17 +10,13 @@ import kotlinx.serialization.json.JsonElement
 const val RICH_PRESENCE_TAG = "discord_rpc"
 
 // Constant for application id
-private const val RICH_PRESENCE_APPLICATION_ID = "1173423931865170070"
+private const val RICH_PRESENCE_APPLICATION_ID = "1229438545437921392"
 
 // Constant for buttons list
-private val RICH_PRESENCE_BUTTONS = listOf("Discord Server")
+private val RICH_PRESENCE_BUTTONS = null
 
 // Constant for metadata list
-private val RICH_PRESENCE_METADATA = Activity.Metadata(
-    listOf(
-        "https://discord.gg/85jB7V5AJR",
-    ),
-)
+private val RICH_PRESENCE_METADATA = null
 
 @Serializable
 data class Activity(
@@ -40,7 +30,6 @@ data class Activity(
     val assets: Assets? = null,
     val buttons: List<String>? = RICH_PRESENCE_BUTTONS,
     val metadata: Metadata? = RICH_PRESENCE_METADATA,
-
 ) {
     @Serializable
     data class Assets(
@@ -51,7 +40,7 @@ data class Activity(
         @SerialName("small_image")
         val smallImage: String? = null,
         @SerialName("small_text")
-        val smallText: String? = null,
+        val smallText: String? = "TachiyomiSY",
     )
 
     @Serializable
@@ -63,7 +52,6 @@ data class Activity(
     @Serializable
     data class Timestamps(
         val start: Long? = null,
-        val end: Long? = null,
         val stop: Long? = null,
     )
 }
@@ -117,7 +105,6 @@ data class Res(
     val d: JsonElement,
 )
 
-@Suppress("MagicNumber")
 enum class OpCode(val value: Int) {
     /** An event was dispatched. */
     DISPATCH(0),
@@ -162,16 +149,14 @@ data class PlayerData(
     val animeTitle: String? = null,
     val episodeNumber: String? = null,
     val thumbnailUrl: String? = null,
-    val startTimestamp: Long? = null,
-    val endTimestamp: Long? = null,
 )
 
 data class ReaderData(
     val incognitoMode: Boolean = false,
     val mangaId: Long? = null,
     val mangaTitle: String? = null,
-    val chapterProgress: Pair<Int, Int> = Pair(0, 0),
-    val chapterNumber: String? = null,
+    val chapterNumber: Pair<Float, Int> = Pair(0f, 0),
+    val chapterTitle: String? = null,
     val thumbnailUrl: String? = null,
 )
 
@@ -179,27 +164,26 @@ data class ReaderData(
 enum class DiscordScreen(
     @StringRes val text: Int,
     @StringRes val details: Int,
+    @StringRes val state: Int,
     val imageUrl: String,
 ) {
-    APP(R.string.app_name, R.string.browsing, ANIMETAIL_IMAGE),
-    LIBRARY(R.string.label_library, R.string.browsing, LIBRARY_IMAGE_URL),
-    UPDATES(R.string.label_recent_updates, R.string.scrolling, UPDATES_IMAGE_URL),
-    HISTORY(R.string.label_recent_manga, R.string.scrolling, HISTORY_IMAGE_URL),
-    BROWSE(R.string.label_sources, R.string.browsing, BROWSE_IMAGE_URL),
-    MORE(R.string.label_settings, R.string.messing, MORE_IMAGE_URL),
-    WEBVIEW(R.string.action_web_view, R.string.browsing, WEBVIEW_IMAGE_URL),
-    MANGA(R.string.manga, R.string.reading, MANGA_IMAGE_URL),
+    APP(R.string.app_name, R.string.browsing, R.string.label_library, tachiyomiImageUrl),
+    LIBRARY(R.string.app_name, R.string.browsing, R.string.label_library, libraryImageUrl),
+    UPDATES(R.string.app_name, R.string.scrolling, R.string.label_recent_updates, updatesImageUrl),
+    HISTORY(R.string.app_name, R.string.scrolling, R.string.label_recent_manga, historyImageUrl),
+    BROWSE(R.string.app_name, R.string.browsing, R.string.label_sources, browseImageUrl),
+    MORE(R.string.app_name, R.string.messing, R.string.label_settings, moreImageUrl),
+    WEBVIEW(R.string.app_name, R.string.browsing, R.string.action_web_view, webviewImageUrl),
+    MANGA(R.string.app_name, R.string.comic, R.string.reading, mangaImageUrl),
 }
 
 // Constants for standard Rich Presence image urls
-// change the image Urls used here to match animetail brown/ green theme, Luft
-private const val ANIMETAIL_IMAGE = "emojis/1286834519533420544.webp?quality=lossless"
-private const val LIBRARY_IMAGE_URL = "emojis/1235353629867638924.webp?quality=lossless"
-private const val UPDATES_IMAGE_URL = "emojis/1235354596570955917.webp?quality=lossless"
-private const val HISTORY_IMAGE_URL = "emojis/1235354299089817671.webp?quality=lossless"
-private const val BROWSE_IMAGE_URL = "emojis/1235354864419344455.webp?quality=lossless"
-private const val MORE_IMAGE_URL = "emojis/1235355169752088706.webp?quality=lossless"
-private const val WEBVIEW_IMAGE_URL = "emojis/1235355362169851996.webp?quality=lossless"
-private const val MANGA_IMAGE_URL = "emojis/1235355804274659390.webp?quality=lossless"
-
-// <-- AM (DISCORD)
+@Supress
+private const val tachiyomiImageUrl = "emojis/1229456525026787409.webp?quality=lossless"
+private const val libraryImageUrl = "emojis/1229715147250077736.webp?size=128&quality=lossless"
+private const val updatesImageUrl = "emojis/1216122475688231003.webp?quality=lossless"
+private const val historyImageUrl = "emojis/1216122387515310170.webp?quality=lossless"
+private const val browseImageUrl = "emojis/1216122371501723718.webp?quality=lossless"
+private const val moreImageUrl = "emojis/1216122403219050536.webp?quality=lossless"
+private const val webviewImageUrl = "emojis/1216122455618490509.webp?quality=lossless"
+private const val mangaImageUrl = "emojis/1216122415751626782.webp?quality=lossless"
