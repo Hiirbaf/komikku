@@ -96,6 +96,10 @@ data object MoreTab : Tab {
             onClickLibraryUpdateErrors = { navigator.push(LibraryUpdateErrorScreen()) },
             // KMK <--
         )
+        LaunchedEffect(Unit) {
+            (context as? MainActivity)?.ready = true
+            DiscordRPCService.setScreen(context, DiscordScreen.MORE)
+        }
     }
 }
 
@@ -114,11 +118,6 @@ private class MoreScreenModel(
     val showNavUpdates by uiPreferences.showNavUpdates().asState(screenModelScope)
     val showNavHistory by uiPreferences.showNavHistory().asState(screenModelScope)
     // SY <--
-
-    LaunchedEffect(Unit) {
-            (context as? MainActivity)?.ready = true
-            DiscordRPCService.setScreen(context, DiscordScreen.MORE)
-    }
 
     private var _downloadQueueState: MutableStateFlow<DownloadQueueState> = MutableStateFlow(DownloadQueueState.Stopped)
     val downloadQueueState: StateFlow<DownloadQueueState> = _downloadQueueState.asStateFlow()
