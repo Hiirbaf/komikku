@@ -38,7 +38,7 @@ data class Activity(
         @SerialName("large_text")
         val largeText: String? = null,
         @SerialName("small_image")
-        val smallImage: String? = null,
+        val smallImage: crunchyroll_logo,
         @SerialName("small_text")
         val smallText: String? = "TachiyomiSY",
     )
