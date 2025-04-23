@@ -178,7 +178,6 @@ enum class DiscordScreen(
 }
 
 // Constants for standard Rich Presence image urls
-@Supress
 private const val tachiyomiImageUrl = "emojis/1229456525026787409.webp?quality=lossless"
 private const val libraryImageUrl = "emojis/1229715147250077736.webp?size=128&quality=lossless"
 private const val updatesImageUrl = "emojis/1216122475688231003.webp?quality=lossless"
