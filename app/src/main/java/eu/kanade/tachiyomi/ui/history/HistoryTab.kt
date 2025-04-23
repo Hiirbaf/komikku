@@ -165,15 +165,15 @@ data object HistoryTab : Tab {
                     is HistoryScreenModel.Event.OpenChapter -> openChapter(context, e.chapter)
                 }
             }
-            LaunchedEffect(Unit) {
-            DiscordRPCService.setScreen(context, DiscordScreen.HISTORY)
-            }
         }
 
         LaunchedEffect(Unit) {
             resumeLastChapterReadEvent.receiveAsFlow().collectLatest {
                 openChapter(context, screenModel.getNextChapter())
             }
+        }
+        LaunchedEffect(Unit) {
+            DiscordRPCService.setScreen(context, DiscordScreen.HISTORY)
         }
     }
 
