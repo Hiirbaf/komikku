@@ -27,6 +27,8 @@ import eu.kanade.presentation.history.components.HistoryDeleteDialog
 import eu.kanade.presentation.manga.DuplicateMangaDialog
 import eu.kanade.presentation.util.Tab
 import eu.kanade.tachiyomi.R
+import eu.kanade.tachiyomi.data.connections.discord.DiscordRPCService
+import eu.kanade.tachiyomi.data.connections.discord.DiscordScreen
 import eu.kanade.tachiyomi.ui.browse.migration.search.MigrateDialog
 import eu.kanade.tachiyomi.ui.browse.migration.search.MigrateDialogScreenModel
 import eu.kanade.tachiyomi.ui.category.CategoryScreen
@@ -162,6 +164,9 @@ data object HistoryTab : Tab {
                         snackbarHostState.showSnackbar(context.stringResource(MR.strings.clear_history_completed))
                     is HistoryScreenModel.Event.OpenChapter -> openChapter(context, e.chapter)
                 }
+            }
+            LaunchedEffect(Unit) {
+            DiscordRPCService.setScreen(context, DiscordScreen.HISTORY)
             }
         }
 
