@@ -89,9 +89,6 @@ object SettingsConnectionsScreen : SearchableSettings {
                             context.openDiscordLoginActivity()
                         },
                         openSettings = { navigator.push(SettingsDiscordScreen) },
-                    ),
-                    Preference.PreferenceItem.InfoPreference(stringResource(MR.strings.connections_discord_info)),
-                    Preference.PreferenceItem.InfoPreference(stringResource(MR.strings.connections_info)),
                 ),
             ),
         )
