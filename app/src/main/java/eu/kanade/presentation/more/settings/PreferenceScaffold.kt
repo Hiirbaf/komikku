@@ -20,7 +20,7 @@ fun PreferenceScaffold(
                 title = stringResource(titleRes),
                 navigateUp = onBackPressed,
                 actions = actions,
-                scrollBehavior = it,
+                //scrollBehavior = it,
             )
         },
         content = { contentPadding ->
