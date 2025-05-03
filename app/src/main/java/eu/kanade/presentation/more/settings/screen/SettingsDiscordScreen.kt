@@ -110,7 +110,7 @@ object SettingsDiscordScreen : SearchableSettings {
         )
     }
 
-    @Composable
+    /*@Composable
     private fun getRPCIncognitoGroup(
         connectionsPreferences: ConnectionsPreferences,
         enabled: Boolean,
@@ -163,5 +163,5 @@ object SettingsDiscordScreen : SearchableSettings {
             ),
             enabled = enabled,
         )
-    }
+    }*/
 }
