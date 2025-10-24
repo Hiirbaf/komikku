@@ -466,8 +466,14 @@ class MainActivity : BaseActivity() {
 
     // KMK -->
     override fun onPause() {
+        window.decorView.alpha = 1f
         super.onPause()
         MangaCoverMetadata.savePrefs()
+    }
+
+    override fun onStop() {
+        ready = true
+        super.onStop()
     }
     // KMK <--
 
